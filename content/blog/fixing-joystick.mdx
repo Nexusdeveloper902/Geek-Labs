@@ -1,0 +1,40 @@
+---
+title: Fixing joystick drift and improving graph rendering
+date: 2026-04-22
+project: pico-graph-tool
+tags: [embedded, raspberry-pi-pico, devlog]
+cover: /images/devlog_cover_1776908101742.png
+description: Today I focused on improving the responsiveness of the joystick controls and adding a deadzone.
+---
+
+Today I focused on improving the responsiveness of the joystick controls for my Pico Graphing Tool.
+
+## Joystick Drift Issue
+
+The analog stick was producing unstable values near the center point. This is extremely common with cheap analog joysticks, as the potentiometers don't perfectly center mechanically, leading to a "jitter" in the raw ADC readings.
+
+## Implementing a Deadzone
+
+To solve this, I introduced a deadzone threshold in the firmware:
+
+```cpp
+const int DEADZONE = 150;
+const int CENTER_X = 2048;
+
+int read_joystick_x() {
+  int raw = adc_read();
+  int diff = raw - CENTER_X;
+  
+  if (abs(diff) < DEADZONE) {
+    return 0; // Ignore small movements
+  }
+  
+  return diff;
+}
+```
+
+This immediately smoothed out the experience. The graph now stays perfectly stable when I release the stick!
+
+## Next Steps
+- Implement exponential scaling for finer control at low speeds
+- Add a zoom mode using the joystick push button
