@@ -52,6 +52,13 @@ description: A short 1-2 sentence summary of the update.
 ---
 ```
 
+### 3. Creating an Experiment
+
+To add a new mini-project or proof-of-concept to the Pinterest-style masonry board:
+1. Create a new markdown file inside the `content/experiments/` directory (e.g., `my-experiment.mdx`).
+2. Add the frontmatter block, using the same fields as a project (`title`, `date`, `tags`, `cover`, `description`).
+3. The experiment will automatically appear on the `/experiments` masonry grid layout!
+
 ## Content Formatting Guidelines
 
 To maintain the premium aesthetic of the showcase, follow these structural rules when writing the body of your `.mdx` files:
@@ -63,7 +70,8 @@ To maintain the premium aesthetic of the showcase, follow these structural rules
    - Embedded images (`![alt](/path.jpg)`) are automatically styled with rounded borders and a premium glass-card effect.
    - You can embed standard HTML/React components directly in the text since it uses MDX.
    - **Videos:** Use the `<Video />` component to embed videos. Example: `<Video src="/path/demo.mp4" />`
-   - **Carousels:** Use the `<Carousel />` component to show multiple images. Example: `<Carousel images={[{src: "/img1.jpg"}, {src: "/img2.jpg"}]} />`
+   - **Carousels:** Use the `<Carousel />` component to show multiple images. Example: `<Carousel images='[{"src": "/img1.jpg"}]' />`
+   - **GitHub Repos:** Use the `<GithubRepo />` component to fetch and display a beautiful repo card. Example: `<GithubRepo repo="Nexusdeveloper902/Geek-Labs" />`
    - **Navigation:** A Table of Contents and Next/Previous post links are automatically generated for you on every page based on your markdown structure.
 
 Simply save your `.mdx` file, and the content will automatically populate on the site. If a devlog has a `project` field attached to it, it will automatically appear at the bottom of that specific project's page.
