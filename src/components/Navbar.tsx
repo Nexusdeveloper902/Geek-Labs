@@ -39,9 +39,9 @@ export function Navbar() {
                 {label}
                 {isActive && (
                   <motion.div
-                    layoutId="navbar-indicator"
+                    initial={{ opacity: 0, y: 2 }}
+                    animate={{ opacity: 1, y: 0 }}
                     className="absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full bg-primary"
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}
               </Link>

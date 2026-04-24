@@ -1,0 +1,25 @@
+---
+title: "Designing the Feature Showcase"
+date: 2026-04-25
+project: demo-features
+tags: [design, frontend]
+description: A quick look into how we designed the layout for the showcase and integrated MDX components.
+---
+
+For this showcase, the goal was to ensure the documentation process was as smooth as possible. We needed a way to embed rich media without breaking the Markdown flow.
+
+## The Idea
+
+By utilizing `next-mdx-remote`, we mapped standard HTML elements to our custom components. For instance, any `<code>` block gets automatically processed with `rehype-pretty-code` and styled accordingly.
+
+We also designed a custom `<Video />` component that respects the global glass-card aesthetic. Here is a quick example of the styling:
+
+```css
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+```
+
+This ensures everything feels cohesive!

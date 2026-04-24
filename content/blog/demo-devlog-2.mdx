@@ -1,0 +1,17 @@
+---
+title: "Testing the New Carousel"
+date: 2026-04-26
+project: demo-features
+tags: [testing, UI]
+description: Ironing out the bugs with Next.js Image caching and Framer Motion layout jumping.
+---
+
+We recently ran into a few interesting bugs when developing the new features for the site. 
+
+### The Carousel Loading Flash
+Initially, the `<Carousel />` was using Framer Motion's `AnimatePresence` with `mode="wait"` to swap images. However, because Next.js `<Image>` components are lazy-loaded by default, clicking "Next" would unmount the old image and mount a new one, causing a brief empty flash before the new image loaded.
+
+**The Fix:** We rewrote the Carousel to render *all* images in a single `flex` row container. We then used Framer Motion to animate the `x` offset of the container to slide between images. Since all images are in the DOM, there's no loading flash!
+
+### The Navbar Jump
+We also noticed that using `layoutId` on the Navbar indicator caused a weird jump when navigating between project pages. Because the Next.js App Router restores scroll position, Framer Motion was trying to animate the absolute position change on the screen. We swapped the `layoutId` out for a simple `opacity` fade-in, and the navigation is butter-smooth again.

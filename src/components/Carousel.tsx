@@ -9,7 +9,16 @@ interface CarouselProps {
   images: { src: string; alt?: string }[];
 }
 
-export function Carousel({ images }: CarouselProps) {
+export function Carousel(props: any) {
+  let images = props.images;
+  if (typeof images === 'string') {
+    try {
+      images = JSON.parse(images);
+    } catch (e) {
+      console.error("Failed to parse carousel images", e);
+    }
+  }
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -24,27 +33,28 @@ export function Carousel({ images }: CarouselProps) {
 
   return (
     <div className="relative my-8 w-full overflow-hidden rounded-xl border border-white/10 glass-card aspect-video group bg-[#0d0d0e]">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-          className="relative w-full h-full"
-        >
-          <Image
-            src={images[currentIndex].src}
-            alt={images[currentIndex].alt || `Slide ${currentIndex + 1}`}
-            fill
-            className="object-cover"
-          />
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        className="flex w-full h-full"
+        initial={false}
+        animate={{ x: `-${currentIndex * 100}%` }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        {images.map((image, idx) => (
+          <div key={idx} className="relative min-w-full h-full">
+            <Image
+              src={image.src}
+              alt={image.alt || `Slide ${idx + 1}`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
+        ))}
+      </motion.div>
 
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
+        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70 z-10"
         aria-label="Previous slide"
       >
         <ChevronLeft size={24} />
@@ -52,13 +62,13 @@ export function Carousel({ images }: CarouselProps) {
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
+        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70 z-10"
         aria-label="Next slide"
       >
         <ChevronRight size={24} />
       </button>
 
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, index) => (
           <button
             key={index}
