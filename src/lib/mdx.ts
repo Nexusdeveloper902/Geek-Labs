@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 
 const contentDirectory = path.join(process.cwd(), 'content');
 
-export type ContentType = 'blog' | 'projects';
+export type ContentType = 'blog' | 'projects' | 'experiments';
 
 export interface Frontmatter {
   title: string;

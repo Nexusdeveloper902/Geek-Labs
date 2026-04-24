@@ -1,0 +1,25 @@
+---
+title: "GitHub Component Test"
+date: 2026-04-24
+tags: [react, nextjs, api]
+cover: /images/neon_circuit.png
+description: A quick experiment to test out fetching live GitHub repository data inside a Markdown file using React Server Components.
+---
+
+One of the coolest features of the new `next-mdx-remote` setup is the ability to drop asynchronous React Server Components directly into the markdown!
+
+Instead of writing a standard markdown link like `[Geek-Labs](https://github.com/Nexusdeveloper902/Geek-Labs)`, we can now use our custom component. 
+
+Here is what happens when we drop the `<GithubRepo repo="Nexusdeveloper902/Geek-Labs" />` component into the devlog. It fetches the live description, stars, and forks from the GitHub API during build time!
+
+<GithubRepo repo="Nexusdeveloper902/Geek-Labs" />
+
+### Why is this cool?
+1. Zero client-side JavaScript required for fetching.
+2. It's cached heavily to prevent rate limits.
+3. It creates a beautiful, unified premium aesthetic for all external project links.
+
+We can also test it with other popular repositories!
+
+<GithubRepo repo="vercel/next.js" />
+<GithubRepo repo="facebook/react" />

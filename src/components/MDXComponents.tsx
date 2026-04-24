@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Video } from './Video';
 import { Carousel } from './Carousel';
+import { GithubRepo } from './GithubRepo';
 
 export const MDXComponents = {
   h1: (props: any) => <h1 className="mt-8 mb-4 text-4xl font-extrabold tracking-tight lg:text-5xl" {...props} />,
@@ -37,4 +38,5 @@ export const MDXComponents = {
   ),
   Video: Video,
   Carousel: Carousel,
+  GithubRepo: GithubRepo,
 };
