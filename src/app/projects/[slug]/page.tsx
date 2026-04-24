@@ -1,10 +1,14 @@
-import { getDocumentBySlug, getSlugs, getPostsByProject } from "@/lib/mdx";
+import { getDocumentBySlug, getSlugs, getPostsByProject, getAllDocuments } from "@/lib/mdx";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { MDXComponents } from "@/components/MDXComponents";
+import { TableOfContents } from "@/components/TableOfContents";
 import Image from "next/image";
 import { format } from "date-fns";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
 
 export async function generateStaticParams() {
   const slugs = getSlugs("projects");
@@ -20,8 +24,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
+  const allProjects = getAllDocuments("projects");
+  const currentIndex = allProjects.findIndex((p) => p.slug === slug);
+  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+
   return (
-    <article className="mx-auto max-w-3xl">
+    <div className="mx-auto max-w-5xl flex gap-10 items-start">
+      <article className="w-full max-w-3xl flex-1">
       <div className="mb-8 flex flex-col items-center text-center">
         <div className="mb-4 text-sm text-muted-foreground">
           {format(new Date(project.frontmatter.date), "MMMM d, yyyy")}
@@ -53,7 +63,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       )}
 
       <div className="prose prose-invert max-w-none">
-        <MDXRemote source={project.content} components={MDXComponents} />
+        <MDXRemote 
+          source={project.content} 
+          components={MDXComponents} 
+          options={{
+            mdxOptions: {
+              rehypePlugins: [
+                [rehypePrettyCode as any, { theme: "github-dark" }],
+                rehypeSlug as any,
+              ],
+            },
+          }}
+        />
       </div>
 
       {relatedPosts.length > 0 && (
@@ -76,6 +97,34 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
       )}
-    </article>
+
+      {(prevProject || nextProject) && (
+        <div className="mt-16 border-t border-white/10 pt-12 flex flex-col sm:flex-row justify-between gap-4">
+          {prevProject ? (
+            <Link href={`/projects/${prevProject.slug}`} className="group flex-1">
+              <div className="glass-card flex h-full flex-col justify-center rounded-xl p-6 transition-colors group-hover:border-primary/50">
+                <span className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+                  <ArrowLeft size={16} /> Previous
+                </span>
+                <span className="font-bold group-hover:text-primary transition-colors line-clamp-1">{prevProject.frontmatter.title}</span>
+              </div>
+            </Link>
+          ) : <div className="flex-1" />}
+          
+          {nextProject ? (
+            <Link href={`/projects/${nextProject.slug}`} className="group flex-1 text-right">
+              <div className="glass-card flex h-full flex-col justify-center rounded-xl p-6 transition-colors group-hover:border-primary/50">
+                <span className="mb-2 flex items-center justify-end gap-2 text-sm text-muted-foreground">
+                  Next <ArrowRight size={16} />
+                </span>
+                <span className="font-bold group-hover:text-primary transition-colors line-clamp-1">{nextProject.frontmatter.title}</span>
+              </div>
+            </Link>
+          ) : <div className="flex-1" />}
+        </div>
+      )}
+      </article>
+      <TableOfContents source={project.content} />
+    </div>
   );
 }
