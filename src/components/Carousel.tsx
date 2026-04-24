@@ -5,18 +5,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
-interface CarouselProps {
-  images: { src: string; alt?: string }[];
+interface CarouselImage {
+  src: string;
+  alt?: string;
 }
 
-export function Carousel(props: any) {
-  let images = props.images;
-  if (typeof images === 'string') {
+interface CarouselProps {
+  images: CarouselImage[] | string;
+}
+
+export function Carousel({ images: initialImages }: CarouselProps) {
+  let images: CarouselImage[] = [];
+  if (typeof initialImages === 'string') {
     try {
-      images = JSON.parse(images);
+      images = JSON.parse(initialImages);
     } catch (e) {
       console.error("Failed to parse carousel images", e);
     }
+  } else if (Array.isArray(initialImages)) {
+    images = initialImages;
   }
 
   const [currentIndex, setCurrentIndex] = useState(0);
