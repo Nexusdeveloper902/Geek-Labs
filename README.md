@@ -59,8 +59,11 @@ To maintain the premium aesthetic of the showcase, follow these structural rules
 1. **Structure:** Format the content nicely using standard Markdown headers (`##`, `###`), bullet points, and code blocks. Do not include conversational filler—keep it focused entirely on the content and technical details.
 2. **Tone:** Write in a professional but enthusiastic tone. It should read like an authentic engineering journal.
 3. **Styling:** The site automatically applies custom styling to your Markdown:
-   - Code blocks automatically receive syntax highlighting.
+   - Code blocks automatically receive full syntax highlighting (github-dark theme).
    - Embedded images (`![alt](/path.jpg)`) are automatically styled with rounded borders and a premium glass-card effect.
    - You can embed standard HTML/React components directly in the text since it uses MDX.
+   - **Videos:** Use the `<Video />` component to embed videos. Example: `<Video src="/path/demo.mp4" />`
+   - **Carousels:** Use the `<Carousel />` component to show multiple images. Example: `<Carousel images={[{src: "/img1.jpg"}, {src: "/img2.jpg"}]} />`
+   - **Navigation:** A Table of Contents and Next/Previous post links are automatically generated for you on every page based on your markdown structure.
 
 Simply save your `.mdx` file, and the content will automatically populate on the site. If a devlog has a `project` field attached to it, it will automatically appear at the bottom of that specific project's page.
