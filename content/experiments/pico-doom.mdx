@@ -1,31 +1,27 @@
 ---
-title: "DOOM on an Overclocked Raspberry Pi Pico"
+title: "DOOM-style Wireframe Engine on an Overclocked Pico"
 date: 2026-04-25
 tags: [hardware, raspberry pi pico, c++, doom, overclocking]
 cover: /images/circuit_doom.png
-description: Taking the Raspberry Pi Pico to its limits! Overclocking to 250MHz to run classic DOOM on a tiny monochromatic OLED display with a custom joystick controller.
+description: Taking the Raspberry Pi Pico to its limits! Overclocking to 250MHz to run a wireframe DOOM clone on a tiny monochromatic OLED display with a custom joystick controller.
 ---
 
-Can it run DOOM? The eternal question in hardware hacking. In this experiment, I set out to prove that not only can the Raspberry Pi Pico run DOOM, but it can run it well — and on a tiny monochromatic OLED display!
+Can it run DOOM? That's always the first question when a new microcontroller drops. For this experiment, I wanted to see how far I could push the Raspberry Pi Pico by rendering a DOOM-style first-person shooter on a tiny monochromatic OLED display! 
 
-To pull this off, the standard 133 MHz wasn't going to cut it. I pushed the RP2040 chip up to **250 MHz** to ensure a smooth framerate while rendering the game logic and pushing pixels to the screen.
+To be completely fair, this isn't the *full* DOOM engine — it's a wireframe 3D clone with some basic enemies you can run around and shoot. But to pull off those 3D calculations efficiently, the standard 133 MHz wasn't going to cut it. I had to overclock the RP2040 chip up to **250 MHz** to keep things running smoothly.
 
 ### The Setup & Code
 
-Here is the brains of the operation. Pushing the RP2040 to 250 MHz requires some careful configuration, but unlocking that extra performance is what makes this project possible. I wired up a classic analog joystick for movement and a couple of momentary push buttons for firing.
+Getting the code to run effectively meant porting some display logic and mapping out inputs to the Pico SDK. The RP2040's dual-core architecture is incredibly handy here, letting us crunch math on one core while managing display updates on the other.
 
-Getting the DOOM engine to run effectively meant porting the display logic and inputs to the Pico SDK. 
+<Carousel images='[{"src": "/images/circuit_doom.png", "alt": "The Circuit Setup"}, {"src": "/images/code_doom.png", "alt": "The Overclocked Source Code"}]' />
 
-<Carousel images='[{"src": "/images/circuit_doom.png", "alt": "The DOOM Circuit Setup"}, {"src": "/images/code_doom.png", "alt": "The Overclocked Source Code"}]' />
-
-It's a beautiful intersection of raw embedded C++ performance and classic game programming. The RP2040's dual-core architecture allows us to handle the game state on one core while managing display updates on the other.
+For the controls, I kept it minimal. I wired up a standard analog joystick to handle the movement, and rather than adding external buttons, I just used the joystick's integrated push-button to fire. Everything connects neatly via I2C to standard SSD1306 OLED screen.
 
 ### The Final Result
 
-Seeing it in action is something else. Witness the glory of an overclocked Pico rendering DOOM!
+Seeing the 3D lines render across the tiny display feels really rewarding. 
 
 <Video src="/videos/Video_doom.mp4" />
 
-Running a game from 1993 on a microcontroller from today is a testament to how far technology has come, and how flexible the Raspberry Pi Pico really is. 
-
-What should we port next?
+Running a 3D wireframe engine on a microcontroller is a fun testament to how fast these little embedded chips have gotten. It's a great stepping stone to more complex graphical experiments.
