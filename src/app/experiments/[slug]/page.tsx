@@ -9,10 +9,54 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   const slugs = getSlugs("experiments");
   return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const experiment = getDocumentBySlug("experiments", slug);
+
+  if (!experiment) {
+    return { title: "Experiment Not Found" };
+  }
+
+  const { title, description, cover, tags, date } = experiment.frontmatter;
+
+  return {
+    title,
+    description: description || `Check out "${title}" — an experiment from Geek Labs Studio.`,
+    openGraph: {
+      title: `${title} | Geek Labs Studio`,
+      description: description || `Check out "${title}" — an experiment from Geek Labs Studio.`,
+      type: "article",
+      publishedTime: new Date(date).toISOString(),
+      tags: tags || [],
+      ...(cover && {
+        images: [
+          {
+            url: cover,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: description || `Check out "${title}" — an experiment from Geek Labs Studio.`,
+      ...(cover && { images: [cover] }),
+    },
+  };
 }
 
 export default async function ExperimentPage({ params }: { params: Promise<{ slug: string }> }) {

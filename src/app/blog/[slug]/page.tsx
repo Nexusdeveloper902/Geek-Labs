@@ -9,10 +9,54 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   const slugs = getSlugs("blog");
   return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getDocumentBySlug("blog", slug);
+
+  if (!post) {
+    return { title: "Post Not Found" };
+  }
+
+  const { title, description, cover, tags, date } = post.frontmatter;
+
+  return {
+    title,
+    description: description || `Read "${title}" on the Geek Labs Studio devlog.`,
+    openGraph: {
+      title: `${title} | Geek Labs Studio`,
+      description: description || `Read "${title}" on the Geek Labs Studio devlog.`,
+      type: "article",
+      publishedTime: new Date(date).toISOString(),
+      tags: tags || [],
+      ...(cover && {
+        images: [
+          {
+            url: cover,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: description || `Read "${title}" on the Geek Labs Studio devlog.`,
+      ...(cover && { images: [cover] }),
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

@@ -2,6 +2,18 @@ import { getAllDocuments } from "@/lib/mdx";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Experiments",
+  description:
+    "Mini-projects, proof-of-concepts, and experimental tinkering from Geek Labs Studio — pushing the limits of hardware and code.",
+  openGraph: {
+    title: "Experiments | Geek Labs Studio",
+    description:
+      "Mini-projects, proof-of-concepts, and experimental tinkering — pushing the limits of hardware and code.",
+  },
+};
 
 export default function ExperimentsPage() {
   const experiments = getAllDocuments("experiments");

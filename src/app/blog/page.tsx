@@ -2,6 +2,18 @@ import { getAllDocuments } from "@/lib/mdx";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Devlog",
+  description:
+    "Notes, progress updates, and technical deep-dives into game development, embedded systems, and hardware hacking projects at Geek Labs Studio.",
+  openGraph: {
+    title: "Devlog | Geek Labs Studio",
+    description:
+      "Notes, progress updates, and technical deep-dives into game development, embedded systems, and hardware hacking projects.",
+  },
+};
 
 export default function BlogPage() {
   const posts = getAllDocuments("blog");

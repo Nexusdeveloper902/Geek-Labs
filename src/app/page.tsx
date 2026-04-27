@@ -2,6 +2,32 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { getAllDocuments } from "@/lib/mdx";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Geek Labs Studio — Code it. Build it. Break it.",
+  },
+  description:
+    "Geek Labs Studio is the developer portfolio and engineering journal of Jerónimo — showcasing game development, embedded systems, hardware hacking, and experimental projects.",
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jerónimo",
+  url: "https://geek-labs-eight.vercel.app",
+  sameAs: ["https://github.com/Nexusdeveloper902"],
+  jobTitle: "Developer",
+  knowsAbout: [
+    "Game Development",
+    "Embedded Systems",
+    "Automation",
+    "C++",
+    "Raspberry Pi Pico",
+    "Next.js",
+  ],
+};
 
 export default function Home() {
   const projects = getAllDocuments("projects").slice(0, 2);
@@ -9,10 +35,20 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-20">
-      <section className="mt-12 flex flex-col gap-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+
+      <section className="mt-12 flex flex-col gap-6" aria-label="Hero introduction">
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
           Hi, I'm <span className="text-primary">Jerónimo</span>
         </h1>
+        <p className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl">
+          <span className="bg-gradient-to-r from-primary via-emerald-400 to-secondary bg-clip-text text-transparent">
+            Code it. Build it. Break it.
+          </span>
+        </p>
         <p className="max-w-2xl text-xl text-muted-foreground">
           Game Developer | Embedded Systems | Automation. <br />
           Building creative software, electronics projects, and experimental systems.
@@ -33,7 +69,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-8">
+      <section className="flex flex-col gap-8" aria-label="Featured projects">
         <div className="flex items-center justify-between">
           <h2 className="text-3xl font-bold tracking-tight">Featured Projects</h2>
           <Link href="/projects" className="group flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80">
@@ -56,7 +92,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-8">
+      <section className="flex flex-col gap-8" aria-label="Latest devlogs">
         <div className="flex items-center justify-between">
           <h2 className="text-3xl font-bold tracking-tight">Latest Devlogs</h2>
           <Link href="/blog" className="group flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80">

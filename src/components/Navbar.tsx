@@ -29,7 +29,7 @@ export function Navbar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/20 text-primary">
             <Terminal size={18} />
           </div>
-          <span className="font-bold tracking-tight">Geek Labs</span>
+          <span className="font-bold tracking-tight">Geek Labs Studio</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           {links.map(({ href, label }) => {

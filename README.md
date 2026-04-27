@@ -1,6 +1,8 @@
-# Geek Labs Developer Showcase
+# Geek Labs Studio
 
-Welcome to the open-source repository for the Geek Labs developer showcase and devlog. This site is built with **Next.js (App Router)**, **Tailwind CSS**, and **MDX**.
+> *Code it. Build it. Break it.*
+
+Welcome to the open-source repository for the **Geek Labs Studio** developer showcase and devlog. This site is built with **Next.js (App Router)**, **Tailwind CSS**, and **MDX**.
 
 ## Setup & Running Locally
 
@@ -73,5 +75,16 @@ To maintain the premium aesthetic of the showcase, follow these structural rules
    - **Carousels:** Use the `<Carousel />` component to show multiple images. Example: `<Carousel images='[{"src": "/img1.jpg"}]' />`
    - **GitHub Repos:** Use the `<GithubRepo />` component to fetch and display a beautiful repo card. Example: `<GithubRepo repo="Nexusdeveloper902/Geek-Labs" />`
    - **Navigation:** A Table of Contents and Next/Previous post links are automatically generated for you on every page based on your markdown structure.
+
+## SEO
+
+Geek Labs Studio includes comprehensive SEO out of the box:
+
+- **Dynamic metadata** on every page (title, description, Open Graph, Twitter cards)
+- **Dynamic OG image** generated at build time (`src/app/opengraph-image.tsx`)
+- **Sitemap** automatically generated from all MDX content (`/sitemap.xml`)
+- **Robots.txt** with crawler instructions (`/robots.txt`)
+- **JSON-LD structured data** (WebSite + Person schemas)
+- **Semantic HTML** with proper heading hierarchy and ARIA labels
 
 Simply save your `.mdx` file, and the content will automatically populate on the site. If a devlog has a `project` field attached to it, it will automatically appear at the bottom of that specific project's page.

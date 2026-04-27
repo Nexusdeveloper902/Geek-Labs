@@ -1,5 +1,17 @@
 import { ProjectCard } from "@/components/ProjectCard";
 import { getAllDocuments } from "@/lib/mdx";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "A showcase of games, electronics, and embedded systems projects by Jerónimo at Geek Labs Studio.",
+  openGraph: {
+    title: "Projects | Geek Labs Studio",
+    description:
+      "A showcase of games, electronics, and embedded systems projects by Jerónimo.",
+  },
+};
 
 export default function ProjectsPage() {
   const projects = getAllDocuments("projects");
