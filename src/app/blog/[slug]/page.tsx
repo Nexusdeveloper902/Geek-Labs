@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
 
   return (
-    <div className="mx-auto max-w-5xl flex gap-10 items-start">
+    <div className="mx-auto max-w-5xl flex flex-col lg:flex-row gap-10 items-start">
       <article className="w-full max-w-3xl flex-1">
       <div className="mb-8">
         <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
@@ -88,8 +88,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </time>
           {post.frontmatter.tags && (
             <>
-              <span>•</span>
-              <div className="flex gap-2">
+              <span className="hidden sm:inline">•</span>
+              <div className="flex flex-wrap gap-2">
                 {post.frontmatter.tags.map((tag: string) => (
                   <span key={tag} className="text-primary">#{tag}</span>
                 ))}

@@ -53,12 +53,18 @@ export default function Home() {
           Game Developer | Embedded Systems | Automation. <br />
           Building creative software, electronics projects, and experimental systems.
         </p>
-        <div className="flex items-center gap-4 pt-4">
+        <div className="flex flex-wrap items-center gap-4 pt-4">
           <Link
             href="/projects"
             className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             View Projects
+          </Link>
+          <Link
+            href="/experiments"
+            className="inline-flex h-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 px-8 text-sm font-medium transition-colors hover:bg-white/10"
+          >
+            View Experiments
           </Link>
           <Link
             href="/blog"

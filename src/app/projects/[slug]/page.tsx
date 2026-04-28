@@ -74,7 +74,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
 
   return (
-    <div className="mx-auto max-w-5xl flex gap-10 items-start">
+    <div className="mx-auto max-w-5xl flex flex-col lg:flex-row gap-10 items-start">
       <article className="w-full max-w-3xl flex-1">
       <div className="mb-8 flex flex-col items-center text-center">
         <div className="mb-4 text-sm text-muted-foreground">
@@ -84,7 +84,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {project.frontmatter.title}
         </h1>
         {project.frontmatter.tags && (
-          <div className="flex gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             {project.frontmatter.tags.map((tag: string) => (
               <span key={tag} className="rounded-md bg-secondary/10 px-3 py-1 text-sm font-medium text-secondary">
                 {tag}
